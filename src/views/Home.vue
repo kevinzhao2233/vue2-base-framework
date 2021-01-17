@@ -1,18 +1,26 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>This is an home page</h1>
+    <a-button type="primary">
+      Primary
+    </a-button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { searchSong } from '@/api/exampleGet'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  created() {
+    this.fetchData()
+  },
+  methods: {
+    async fetchData() {
+      const res = await searchSong({ keywords: '干饭人之歌' })
+      // const res2 = await test()
+      console.log(res)
+    }
   }
 }
 </script>
