@@ -10,7 +10,7 @@ const preApi = process.env.VUE_APP_API
 
 console.log(
   chalk.green('**********************************\n'),
-  `${chalk.blue('target:')} ${chalk.bgGray(`${apiHost}:${apiPort}${preApi}`)}`,
+  `${chalk.blue('target:')} ${chalk.green(`${apiHost}:${apiPort}${preApi}`)}`,
   chalk.green('\n\n**********************************')
 )
 

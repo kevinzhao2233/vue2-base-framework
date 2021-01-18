@@ -9,7 +9,7 @@ const service = axios.create({
   // 如果不需要跨域即可访问，则可以打开 baseURL，并在 vue.config.js 中关掉代理
   // baseURL: `${process.env.VUE_APP_HOST}:${process.env.VUE_APP_PORT}${process.env.VUE_APP_API}`,
   // withCredentials: true, // 是否在跨域请求中发送 cookie
-  timeout: 1000
+  timeout: 5000
 })
 
 // 请求拦截器
@@ -22,9 +22,9 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    log.pretty('axios request error', error.url, 'danger')
+    log.pretty('axios request error', error.url, 'danger', error)
     message.error({
-      content: error.msg || 'Error: 请求错误',
+      content: error.message || 'Error: 请求错误',
       duration: 5
     })
     return Promise.reject(error)
@@ -36,7 +36,8 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // 每个请求都打印出来，方便调试
-    console.log(('%c>>resInfo'), 'color: #19be6b', response.config.url, response)
+    log.print('resInfo', 'success', true, response)
+    // console.log(('%c>>resInfo'), 'color: #19be6b', response.config.url, response)
     // 判断自定义 code 值，需要跟后端协商，可能是其他值
     if (+res.code !== 200) {
       // 响应失败
@@ -53,10 +54,10 @@ service.interceptors.response.use(
         router.replace('#')
       }
       message.error({
-        content: res.msg || 'Error: 响应错误',
+        content: res.message || 'Error: 响应错误',
         duration: 5
       })
-      return Promise.reject(new Error(res.msg || 'Error: 响应错误'))
+      return Promise.reject(new Error(res.message || 'Error: 响应错误'))
     } else {
       // 获取响应成功，返回信息给组件
       const { data } = response
@@ -70,12 +71,11 @@ service.interceptors.response.use(
     }
   },
   error => {
-    log.pretty('axios response error', error.url, 'danger')
+    log.pretty('axios response error', error?.config?.url, 'danger', error?.toJSON() || error)
     message.error({
-      content: error.msg || 'Error',
+      content: error.message || 'Error',
       duration: 5
     })
-    console.dir(error)
     return Promise.reject(error)
   }
 )

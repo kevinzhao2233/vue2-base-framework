@@ -1,3 +1,9 @@
+/**
+ * 控制台输出好看的打印信息
+ * log.print(text, type = 'default', isBack = false, content)
+ * log.pretty(title, text, type = 'primary', content)
+ */
+
 // 定义 log 对象
 const log = {}
 
@@ -7,7 +13,7 @@ const log = {}
  * @param type 输出样式，可以是6个状态值，也可以是自定义颜色
  * @param back 是否将色值应用于背景色
  */
-log.print = function(text, type = 'default', back = false) {
+log.print = function(text, type = 'default', back = false, content) {
   if (typeof text === 'object') { // 如果是对象则调用打印对象方式
     console.dir(text)
     return
@@ -15,12 +21,14 @@ log.print = function(text, type = 'default', back = false) {
   if (back) { // 如果是打印带背景图的
     console.log(
       `%c ${text} `,
-      `background:${typeColor(type)}; padding: 2px; border-radius: 4px;color: #fff;`
+      `background:${typeColor(type)}; padding: 2px; border-radius: 4px;color: #fff;`,
+      content
     )
   } else {
     console.log(
       `%c ${text} `,
-      `color: ${typeColor(type)};`
+      `color: ${typeColor(type)};`,
+      content
     )
   }
 }
@@ -31,12 +39,13 @@ log.print = function(text, type = 'default', back = false) {
  * @param text 输出文本
  * @param type 输出样式，可以是6个状态值，也可以是自定义颜色
  */
-log.pretty = function(title, text, type = 'primary') {
+log.pretty = function(title, text, type = 'primary', content) {
   console.log(
     `%c ${title} %c ${text} %c`,
     `background:${typeColor(type)};border:1px solid ${typeColor(type)}; padding: 1px; border-radius: 4px 0 0 4px; color: #fff;`,
     `border:1px solid ${typeColor(type)}; padding: 1px; border-radius: 0 4px 4px 0; color: ${typeColor(type)};`,
-    'background:transparent'
+    'background:transparent',
+    content
   )
 }
 
