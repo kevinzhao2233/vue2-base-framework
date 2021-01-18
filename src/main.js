@@ -5,6 +5,7 @@ import './styles/reset.css'
 import 'ant-design-vue/dist/antd.css'
 import router from './router'
 import store from './store'
+import './utils/progress'
 
 Vue.config.productionTip = false
 

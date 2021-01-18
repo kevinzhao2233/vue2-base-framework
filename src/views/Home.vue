@@ -18,8 +18,6 @@ export default {
   methods: {
     async fetchData() {
       const res = await searchSong({ keywords: '干饭人之歌' })
-      // const res2 = await test()
-      console.log(res)
     }
   }
 }
