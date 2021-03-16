@@ -11,11 +11,6 @@
     "lint": "vue-cli-service lint",
     "prepare": "husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
   "lint-staged": {
     "*.{html,vue,css,scss}": [
       "stylelint --fix",
