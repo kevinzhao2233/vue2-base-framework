@@ -2,7 +2,7 @@ import axios from 'axios'
 import { message } from 'ant-design-vue'
 import store from '@/store'
 import router from '@/router'
-import log from '@/utils/log'
+import log from 'b-pretty-log'
 
 // 创建一个 axios 实例
 const service = axios.create({
@@ -22,7 +22,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    log.pretty('axios request error', error.url, 'danger', error)
+    log.pretty('axios request error', error.url, error, 'danger')
     message.error({
       content: error.message || 'Error: 请求错误',
       duration: 5
@@ -36,8 +36,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // 每个请求都打印出来，方便调试
-    log.print('resInfo', 'success', true, response)
-    // console.log(('%c>>resInfo'), 'color: #19be6b', response.config.url, response)
+    log('resInfo', response, 'success', true)
     // 判断自定义 code 值，需要跟后端协商，可能是其他值
     if (+res.code !== 200) {
       // 响应失败
@@ -71,7 +70,7 @@ service.interceptors.response.use(
     }
   },
   error => {
-    log.pretty('axios response error', error?.config?.url, 'danger', error?.toJSON() || error)
+    log.pretty('axios response error', error?.config?.url, error?.toJSON() || error, 'danger')
     message.error({
       content: error.message || 'Error',
       duration: 5
