@@ -1,13 +1,12 @@
 import Vue from 'vue'
+import log from 'b-pretty-log'
 import App from './App.vue'
 import Antd from 'ant-design-vue'
-import './styles/reset.css'
-import 'ant-design-vue/dist/antd.css'
 import router from './router'
 import store from './store'
 import './utils/progress'
-import log from 'b-pretty-log'
-
+import './styles/reset.css'
+import 'ant-design-vue/dist/antd.css'
 import 'remixicon/fonts/remixicon.css'
 
 Vue.config.productionTip = false
