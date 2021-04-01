@@ -33,6 +33,10 @@ const routes = [
     path: '/error',
     name: 'Error',
     component: Error
+  },
+  {
+    path: '*',
+    redirect: Error
   }
 ]
 

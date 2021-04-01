@@ -46,11 +46,11 @@ service.interceptors.response.use(
       }
       if (+res.code === 403) {
         // 拒绝，一般是没权限之类的，跳转到错误页
-        router.replace('#')
+        router.replace({ name: 'Error', query: { code: 403 }})
       }
       if (+res.code >= 500) {
-        // 后台错误，一般跳转到错误页
-        router.replace('#')
+        // 后台错误，看需求处理
+        // router.replace('#')
       }
       message.error({
         content: res.message || 'Error: 响应错误',
