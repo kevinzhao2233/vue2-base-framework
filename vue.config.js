@@ -25,7 +25,7 @@ module.exports = {
     open: false,
     proxy: {
       // 将 localhost:2233/api/home 代理到 `${apiHost}:${apiPort}${preApi}/home`
-      '^/api': {
+      '/api': {
         target: `${apiHost}:${apiPort}`,
         changeOrigin: true,
         pathRewrite: {
@@ -83,6 +83,11 @@ module.exports = {
         prependData: `
             @import "@/styles/variables.scss";
           `
+      },
+      less: {
+        lessOptions: {
+          javascriptEnabled: true
+        }
       }
     }
   }

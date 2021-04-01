@@ -6,7 +6,7 @@ import router from './router'
 import store from './store'
 import './utils/progress'
 import './styles/reset.css'
-import 'ant-design-vue/dist/antd.css'
+import './styles/antd.less'
 import 'remixicon/fonts/remixicon.css'
 
 Vue.config.productionTip = false
