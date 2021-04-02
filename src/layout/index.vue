@@ -1,12 +1,17 @@
 <template>
   <div class="layout">
+    <Breadcrumb/>
     <router-view/>
   </div>
 </template>
 
 <script>
+import Breadcrumb from './components/Breadcrumb'
 export default {
-  name: 'Layout'
+  name: 'Layout',
+  components: {
+    Breadcrumb
+  }
 }
 </script>
 

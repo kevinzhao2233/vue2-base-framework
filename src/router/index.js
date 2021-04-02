@@ -10,13 +10,44 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'Home',
+        component: Home,
+        meta: {
+          title: '首页'
+        }
+      }
+    ]
   },
   {
-    path: '/redirect/:path*',
-    name: 'Redirect',
-    component: Redirect
+    path: '/test',
+    component: Layout,
+    redirect: '/test/home',
+    name: '测试',
+    children: [
+      {
+        path: '/test/home',
+        name: 'Test',
+        component: Error,
+        meta: {
+          title: '测试1'
+        }
+      }
+    ]
+  },
+  {
+    path: '/redirect',
+    component: Layout,
+    children: [
+      {
+        path: '/redirect/:path*',
+        name: 'Redirect',
+        component: Redirect
+      }
+    ]
   },
   {
     path: '/error',
