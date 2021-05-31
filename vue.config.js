@@ -21,10 +21,10 @@ module.exports = {
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    port: 2233,
+    port: 10001,
     open: false,
     proxy: {
-      // 将 localhost:2233/api/home 代理到 `${apiHost}:${apiPort}${preApi}/home`
+      // 将 localhost:10001/api/home 代理到 `${apiHost}:${apiPort}${preApi}/home`
       '/api': {
         target: `${apiHost}:${apiPort}`,
         changeOrigin: true,
