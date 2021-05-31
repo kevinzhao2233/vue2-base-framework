@@ -2,7 +2,7 @@
 const resolve = dir => require('path').join(__dirname, dir)
 const chalk = require('chalk')
 
-const pageTitle = 'Vue Base FrameWork'
+const pageTitle = 'Vue2 Base FrameWork'
 
 const apiHost = process.env.VUE_APP_HOST
 const apiPort = process.env.VUE_APP_PORT
@@ -10,6 +10,7 @@ const preApi = process.env.VUE_APP_API
 
 console.log(
   chalk.green('**********************************\n'),
+  chalk.blue('DevServer proxy config\n'),
   `${chalk.blue('target:')} ${chalk.green(`${apiHost}:${apiPort}${preApi}`)}`,
   chalk.green('\n\n**********************************')
 )
