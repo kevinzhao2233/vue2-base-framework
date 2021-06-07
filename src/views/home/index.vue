@@ -1,24 +1,32 @@
 <template>
   <div class="home">
-    <h1>This is an home page</h1>
-    <a-button type="primary">
-    </a-button>
+    <div class="editor">
+      <md-editor mini/>
+    </div>
+    <div class="reader">
+      <md-reader/>
+    </div>
   </div>
 </template>
 
 <script>
-import { searchSong } from '@/api/exampleGet'
+import mdEditor from '@/components/markdown/editor'
+import mdReader from '@/components/markdown/reader'
 
 export default {
   name: 'Home',
-  created() {
-    this.fetchData()
+  components: {
+    mdEditor,
+    mdReader
   },
-  methods: {
-    async fetchData() {
-      const res = await searchSong({ keywords: '干饭人之歌' })
-      this.$log('res', res)
-    }
-  }
+  data: () => ({
+    content: ''
+  })
 }
 </script>
+<style lang="scss" scoped>
+.editor {
+  width: 600px;
+  margin: 0 auto;
+}
+</style>

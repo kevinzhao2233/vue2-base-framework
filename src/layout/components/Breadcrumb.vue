@@ -1,6 +1,6 @@
 <template>
-  <div class="com-layout-breadcrumb">
-    <a-breadcrumb style="margin: 12px 0;">
+  <div class="com-layout-breadcrumb" style="padding: 12px 0;">
+    <a-breadcrumb>
       <a-breadcrumb-item v-for="item in breadcrumbList" :key="item.name">
         <router-link :to="item.path">{{item.meta.title}}</router-link>
       </a-breadcrumb-item>
