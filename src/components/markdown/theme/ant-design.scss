@@ -1,0 +1,193 @@
+.vditor-reset.editor-container.ant-design {
+  .vditor-toolbar__item svg {
+    width: 15px;
+    height: 15px;
+    stroke-width: none;
+  }
+
+  .vditor-content {
+    font-size: 14px;
+    line-height: 2;
+    color: rgba(0, 0, 0, 0.85);
+
+    img {
+      max-width: calc(100% - 32px);
+    }
+
+    p > img {
+      margin: 34px 0;
+      box-shadow: 0 8px 20px rgba(143, 168, 191, 0.35);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-family: Avenir, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 38px;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    h2 {
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin: 1.6em 0 0.6em;
+      clear: both;
+      font-family: Avenir, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, helvetica neue, Arial, noto sans, sans-serif, apple color emoji, segoe ui emoji, segoe ui symbol, noto color emoji;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+
+    h5 {
+      font-size: 14px;
+    }
+
+    h6 {
+      font-size: 12px;
+    }
+
+    hr {
+      height: 1px;
+      margin: 56px 0;
+      clear: both;
+      background: #f0f0f0;
+      border: 0;
+    }
+
+    p,
+    pre {
+      margin: 1em 0;
+    }
+
+    blockquote {
+      padding-left: 0.8em;
+      margin: 1em 0;
+      font-size: 90%;
+      color: rgba(0, 0, 0, 0.45);
+      border-left: 4px solid #f0f0f0;
+    }
+
+    blockquote p {
+      margin: 0;
+    }
+
+    ul > li {
+      padding-left: 4px;
+      margin-left: 20px;
+      list-style-type: circle;
+    }
+
+    ol > li {
+      padding-left: 4px;
+      margin-left: 20px;
+      list-style-type: decimal;
+    }
+
+    ol > li > p,
+    ul > li > p {
+      margin: 0.2em 0;
+    }
+
+    code {
+      padding: 0.2em 0.4em;
+      margin: 0 1px;
+      font-family: sfmono-regular, Consolas, liberation mono, Menlo, Courier, monospace;
+      font-size: 0.9em;
+      border: 1px solid #f0f0f0;
+      border-radius: 3px;
+    }
+
+    code:not(.hljs):not(.highlight-chroma) {
+      color: rgba(0, 0, 0, 0.65);
+      background: #f2f4f5;
+    }
+
+    pre {
+      font-family: sfmono-regular, Consolas, liberation mono, Menlo, Courier, monospace;
+      border-radius: 2px;
+    }
+
+    .language-abc path,
+    .language-abc svg {
+      color: rgba(0, 0, 0, 0.85);
+      fill: currentColor;
+    }
+
+    .language-graphviz polygon {
+      fill: transparent;
+    }
+
+    b,
+    strong {
+      font-weight: 500;
+    }
+
+    > table {
+      width: 100%;
+      margin: 8px 0 16px;
+      empty-cells: show;
+      border-spacing: 0;
+      border-collapse: collapse;
+      border: 1px solid #f0f0f0;
+      direction: ltr;
+    }
+
+    > table th {
+      font-weight: 500;
+      color: #5c6b77;
+      white-space: nowrap;
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    > table td,
+    > table th {
+      padding: 16px 24px;
+      text-align: left;
+      border: 1px solid #f0f0f0;
+    }
+
+    .vditor-anchor {
+      margin-left: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    h1:hover .vditor-anchor,
+    h2:hover .vditor-anchor,
+    h3:hover .vditor-anchor,
+    h4:hover .vditor-anchor,
+    h5:hover .vditor-anchor,
+    h6:hover .vditor-anchor {
+      display: inline-block;
+      opacity: 1;
+    }
+
+    > br,
+    > p > br {
+      clear: both;
+    }
+
+    .vditor-ir__link,
+    a {
+      color: #1890ff;
+      text-decoration: none;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 <template>
   <div class="com-md-editor">
-    <div ref="mdContainer" class="editor-container"></div>
+    <div ref="mdContainer" class="editor-container vditor-reset" :class="defaultOption.preview.theme"></div>
     <transition name="fade">
-      <div v-if="fullScreen" ref="fullscreenMdContainer" class="editor-container fullscreen"></div>
+      <div v-if="fullScreen" ref="fullscreenMdContainer" class="editor-container fullscreen" :class="defaultOption.preview.theme"></div>
     </transition>
   </div>
 </template>
@@ -52,6 +52,7 @@ export default {
         mode: 'both',
         actions: [],
         hljs: 'igor',
+        theme: 'git-book',
         markdown: {
           autoSpace: true,
           sanitize: true
@@ -67,11 +68,6 @@ export default {
         // 自定义文件图片上传
         handler: (files) => {
           this.handleUpload(files)
-        },
-        error: (err) => {
-          console.warn(err)
-          // 失败回调
-          this.$emit('upload-error', err)
         }
       },
       cache: {
@@ -82,6 +78,9 @@ export default {
   created() {
     if (!this.mini) return
     this.defaultOption.toolbar = this.miniToolbar
+    this.defaultOption.after = () => {
+      this.vditorInstance.setValue('hello')
+    }
     if (this.defaultOption.toolbar.includes('fullscreen')) {
       this.defaultOption.toolbar.splice(this.defaultOption.toolbar.indexOf('fullscreen'), 1, {
         hotkey: '⌘\'',
@@ -154,6 +153,7 @@ export default {
       // }).catch(err => {
       //   console.warn('文件上传失败', err)
       //   this.vditorInstance.tip('文件上传失败', 4000)
+      //   this.$emit('upload-error', err)
       // })
     },
     matchFileEmoji(type) {
@@ -164,6 +164,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -196,4 +197,9 @@ export default {
     }
   }
 }
+</style>
+<style lang="scss">
+@import '../theme/ant-design.scss';
+@import '../theme/vue.scss';
+@import '../theme/git-book.scss';
 </style>
