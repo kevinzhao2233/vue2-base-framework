@@ -1,8 +1,15 @@
 .vditor-reset.editor-container.vue {
-  .vditor-toolbar__item svg {
-    width: 15px;
-    height: 15px;
-    stroke-width: none;
+  .vditor-toolbar__item {
+    margin-right: 6px;
+
+    svg {
+      width: 15px;
+      height: 15px;
+      stroke-width: none;
+    }
+  }
+  .vditor-toolbar__divider {
+    margin: var(--toolbar-divider-margin-top) 12px var(--toolbar-divider-margin-top) 6px;
   }
   .vditor-content {
     font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;

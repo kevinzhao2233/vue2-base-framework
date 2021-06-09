@@ -2,7 +2,7 @@
   <div class="com-md-editor">
     <div ref="mdContainer" class="editor-container vditor-reset" :class="defaultOption.preview.theme"></div>
     <transition name="fade">
-      <div v-if="fullScreen" ref="fullscreenMdContainer" class="editor-container fullscreen" :class="defaultOption.preview.theme"></div>
+      <div v-if="fullScreen" ref="fullscreenMdContainer" class="editor-container vditor-reset fullscreen" :class="defaultOption.preview.theme"></div>
     </transition>
   </div>
 </template>
@@ -46,7 +46,8 @@ export default {
       },
       counter: {
         enable: true,
-        max: 10000
+        max: 10000,
+        type: 'text'
       },
       preview: {
         mode: 'both',
@@ -183,6 +184,7 @@ export default {
       left: 0;
       z-index: 100;
     }
+
     ol li {
       list-style: decimal;
     }
