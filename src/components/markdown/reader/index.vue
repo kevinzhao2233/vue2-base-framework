@@ -18,23 +18,25 @@ export default {
     placeholder: { type: String, default: '暂无内容' }
   },
   data: () => ({
-    filePreviewTypes: ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xlsx', 'xls', 'txt'],
-    filePreviewUrl: 'http://10.18.104.34:9091/onlinePreview?url=',
+    readerOption: null,
     defaultOption: {
       mode: 'light',
       theme: 'ant-design',
       anchor: 0, // 不渲染标题锚点, 渲染锚点会让整个页面路由乱掉
       hljs: 'igor', // 代码主题，可选项见 https://xyproto.github.io/splash/docs/longer/all.html
       customEmoji: mdEmoji.emoji,
-      speech: { // 对选中后的文字进行阅读
+      speech: {
         enable: false
       },
       markdown: {
         autoSpace: true, // 自动空格
         sanitize: true // 是否启用过滤 XSS
+      },
+      filePreview: {
+        url: 'http://10.18.104.34:9091/onlinePreview?url=',
+        types: ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xlsx', 'xls', 'txt']
       }
-    },
-    readerOption: null
+    }
   }),
   computed: {
     mdContent() {
@@ -68,18 +70,20 @@ export default {
     },
     // 文件 / 图片预览
     previewFile(e) {
+      // 图片预览
       if (e.target.tagName.toUpperCase() === 'IMG' && e.target.className !== 'emoji') {
         Vditor.previewImage(e.target, 'zh_CN')
         return
       }
       if (e.target.tagName.toUpperCase() !== 'A') return
       // 链接的地址
+      if (!this.readerOption.filePreview.url) return
       const href = e.target.href
       const params = utils.url2Params(href)
       if (+params.upload === 1 && params.type) {
-        if (this.filePreviewTypes.includes(params.type)) {
+        if (this.readerOption.filePreview.types.includes(params.type)) {
           e.preventDefault()
-          const previewUrl = this.filePreviewUrl + encodeURIComponent(href)
+          const previewUrl = this.readerOption.filePreview.url + encodeURIComponent(href)
           window.open(previewUrl, '_blink', 'noopener')
         }
       }

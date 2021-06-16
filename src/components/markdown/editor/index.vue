@@ -17,26 +17,16 @@ import * as utils from '../utils/index'
 export default {
   name: 'MdEditor',
   props: {
-    option: { type: Object, default: null },
-    mini: { type: Boolean, default: false },
-    miniToolbar: {
-      type: Array,
-      default: () => ['emoji', 'headings', 'bold', 'list', 'ordered-list', 'link', 'upload', 'fullscreen']
-    }
+    option: { type: Object, default: null }
   },
   data: () => ({
     // 是否为全屏状态
     isFullScreen: false,
     vditorInstance: null,
     fullscreenVditorInstance: null,
-    fullToolbar: ['emoji', 'headings', 'bold', 'italic', 'strike', '|',
-      'code', 'inline-code', '|',
-      'list', 'ordered-list', 'check', '|',
-      'outdent', 'indent', 'undo', 'redo', '|',
-      'link', 'quote', 'line', '|',
-      'upload', 'table', '|',
-      'edit-mode', 'both', 'fullscreen'],
-    customMiniToolbar: [],
+
+    tempEditorHeight: 450,
+
     editorOption: null,
 
     defaultOption: {
@@ -46,7 +36,24 @@ export default {
         pin: true
       },
       // 工具栏
-      toolbar: [],
+      toolbar: ['emoji', 'headings', 'bold', 'italic', 'strike', '|',
+        'code', 'inline-code', '|',
+        'list', 'ordered-list', 'check', '|',
+        'outdent', 'indent', 'undo', 'redo', '|',
+        'link', 'quote', 'line', '|',
+        'upload', 'table', '|',
+        'edit-mode', 'both', 'fullscreen'],
+      mini: {
+        enable: false,
+        miniToolbar: ['emoji', 'headings', 'bold', 'list', 'ordered-list', 'link', 'upload', 'fullscreen'],
+        fullToolbar: ['emoji', 'headings', 'bold', 'italic', 'strike', '|',
+          'code', 'inline-code', '|',
+          'list', 'ordered-list', 'check', '|',
+          'outdent', 'indent', 'undo', 'redo', '|',
+          'link', 'quote', 'line', '|',
+          'upload', 'table', '|',
+          'edit-mode', 'both', 'fullscreen']
+      },
       hint: {
         emoji: mdEmoji.emoji
       },
@@ -92,15 +99,13 @@ export default {
         this.editorOption = utils.mergeObject(this.defaultOption, this.option)
       }
       // 如果为 mini 模式，为其设置合适的 toolbar
-      if (this.mini) {
-        this.editorOption.toolbar = this.miniToolbar
-      } else {
-        this.editorOption.toolbar = this.fullToolbar
+      if (this.editorOption.mini.enable) {
+        this.editorOption.toolbar = this.editorOption.mini.miniToolbar
       }
       // 设置 upload
       this.editorOption.upload.handler = this.handleUpload
       // 自定义全屏功能
-      if (this.mini && this.editorOption.toolbar.includes('fullscreen')) {
+      if (this.editorOption.mini.enable && this.editorOption.toolbar.includes('fullscreen')) {
         this.editorOption.toolbar.splice(this.editorOption.toolbar.indexOf('fullscreen'), 1, {
           hotkey: '⌘\'',
           name: 'customFullscreen',
@@ -120,12 +125,11 @@ export default {
     handleFullscreen(isFullscreen) {
       this.isFullScreen = isFullscreen
       if (isFullscreen) {
-        delete this.editorOption.height
-        if (this.fullToolbar.includes('fullscreen')) {
-          this.fullToolbar.splice(this.fullToolbar.indexOf(), 1)
+        if (this.editorOption.mini.fullToolbar.includes('fullscreen')) {
+          this.editorOption.mini.fullToolbar.splice(this.editorOption.mini.fullToolbar.indexOf(), 1)
         }
-        if (!this.fullToolbar.find(item => item.name === 'customFullscreen')) {
-          this.fullToolbar.push({
+        if (!this.editorOption.mini.fullToolbar.find(item => item.name === 'customFullscreen')) {
+          this.editorOption.mini.fullToolbar.push({
             hotkey: '⌘\'',
             name: 'customFullscreen',
             tipPosition: 's',
@@ -135,7 +139,7 @@ export default {
             click: () => { this.handleFullscreen(false) }
           })
         }
-        this.editorOption.toolbar = this.fullToolbar
+        this.editorOption.toolbar = this.editorOption.mini.fullToolbar
         this.$nextTick(() => {
           this.fullscreenVditorInstance = new Vditor(this.$refs.fullscreenMdContainer, this.editorOption)
           this.fullscreenVditorInstance.focus()
@@ -171,7 +175,12 @@ export default {
         headers: { 'Content-Type': 'multipart/form-data' }
       }
       axios.post(fileUploadUrl, param, config).then(response => {
-        const res = response.data
+        let res = null
+        if (this.editorOption.upload.format) {
+          res = this.editorOption.upload.format(response.data)
+        } else {
+          res = response.data
+        }
         let fileLink = ''
         if (imgs.includes(res.type)) {
           fileLink = `![${res.fileName}](${res.url}${res.url.indexOf('?') > 0 ? `&type=${res.type}` : `?type=${res.type}`})`
@@ -213,6 +222,7 @@ export default {
       bottom: 0;
       left: 0;
       z-index: 100;
+      height: auto !important;
     }
 
     .vditor-toolbar {
