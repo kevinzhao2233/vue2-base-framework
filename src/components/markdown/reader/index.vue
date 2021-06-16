@@ -8,7 +8,6 @@
 import Vditor from 'vditor'
 import 'vditor/src/assets/scss/index.scss'
 import mdEmoji from '../common/mdEmoji'
-import qs from 'qs'
 import * as utils from '../utils/index'
 
 export default {
@@ -20,7 +19,7 @@ export default {
   },
   data: () => ({
     filePreviewTypes: ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'xlsx', 'xls', 'txt'],
-    filePreviewUrl: '',
+    filePreviewUrl: 'http://10.18.104.34:9091/onlinePreview?url=',
     defaultOption: {
       mode: 'light',
       theme: 'ant-design',
@@ -76,11 +75,9 @@ export default {
       if (e.target.tagName.toUpperCase() !== 'A') return
       // 链接的地址
       const href = e.target.href
-      const paramsStr = href.split('?')[1]
-      const params = qs.parse(paramsStr)
-      if (params.upload === 1 && paramsStr.indexOf('&type=') > 0) {
-        const type = params.type
-        if (this.filePreviewTypes.includes(type)) {
+      const params = utils.url2Params(href)
+      if (+params.upload === 1 && params.type) {
+        if (this.filePreviewTypes.includes(params.type)) {
           e.preventDefault()
           const previewUrl = this.filePreviewUrl + encodeURIComponent(href)
           window.open(previewUrl, '_blink', 'noopener')

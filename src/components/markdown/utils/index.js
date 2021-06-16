@@ -14,3 +14,11 @@ export function mergeObject(obj1, obj2) {
   }
   return obj1
 }
+
+export function url2Params(str) {
+  if (!str) return {}
+  const obj = {}
+  str.replace(/([^?=&#]+)=([^?=&#]+)/g, (_, key, value) => { obj[key] = value })
+  str.replace(/#([^?=&#]+)/g, (_, hash) => { obj.HASH = hash })
+  return obj
+}

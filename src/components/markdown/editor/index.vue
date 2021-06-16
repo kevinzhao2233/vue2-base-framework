@@ -37,8 +37,9 @@ export default {
       'upload', 'table', '|',
       'edit-mode', 'both', 'fullscreen'],
     customMiniToolbar: [],
+    editorOption: null,
 
-    editorOption: {
+    defaultOption: {
       mode: 'ir',
       height: 450,
       toolbarConfig: {
@@ -88,7 +89,7 @@ export default {
     setOption() {
       // 合并自定义 option
       if (this.option) {
-        this.editorOption = utils.mergeObject(this.editorOption, this.option)
+        this.editorOption = utils.mergeObject(this.defaultOption, this.option)
       }
       // 如果为 mini 模式，为其设置合适的 toolbar
       if (this.mini) {
@@ -158,8 +159,11 @@ export default {
       const imgs = ['apng', 'avif', 'bmp', 'gif', 'ico', 'cur',
         'jpeg', 'jpg', 'jfif', 'pjpeg', 'pjp',
         'png', 'tif', 'tiff', 'webp']
-      const videos = ['mp4', 'webm', 'ogg']
-      const audios = ['mp3', 'wav', 'ogg']
+      const videosAndAudios = ['mp4', 'webm', 'ogg', 'mp3', 'wav']
+      const matchFileEmoji = (type) => {
+        if (videosAndAudios.includes(type)) return ''
+        return `:${mdEmoji.type2emoji[type] || 'un_know'}:`
+      }
       const param = new FormData()
       param.append('file', files[0])
       this.vditorInstance.tip('文件上传中...', 0)
@@ -170,13 +174,9 @@ export default {
         const res = response.data
         let fileLink = ''
         if (imgs.includes(res.type)) {
-          fileLink = `![${res.fileName}](${res.url}&upload=1&type=${res.type})`
-        } else if (videos.includes(res.type)) {
-          fileLink = `<video controls width="100%" src="${res.url}"></video>`
-        } else if (audios.includes(res.type)) {
-          fileLink = `<audio controls src="${res.url}"></audio>`
+          fileLink = `![${res.fileName}](${res.url}${res.url.indexOf('?') > 0 ? `&type=${res.type}` : `?type=${res.type}`})`
         } else {
-          fileLink = `:${this.matchFileEmoji(res.type)}: [${res.fileName}](${res.url}&type=${res.type})`
+          fileLink = `${matchFileEmoji(res.type)} [${res.fileName}](${res.url}${res.url.indexOf('?') > 0 ? `&upload=1&type=${res.type}` : `?upload=1&type=${res.type}`})`
         }
         this.vditorInstance.insertValue(fileLink)
         this.vditorInstance.tip('文件上传成功，可以对展示信息进行修改哦~', 3000)
@@ -185,10 +185,6 @@ export default {
         this.vditorInstance.tip('文件上传失败', 4000)
         this.$emit('upload-error', err)
       })
-    },
-    // 匹配 emoji
-    matchFileEmoji(type) {
-      return mdEmoji.type2emoji[type] || 'un_know'
     }
   }
 }
